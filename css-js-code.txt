@@ -1,0 +1,382 @@
+Here is my sass/scss code which is used to compile code into style.css
+
+*********************************************************************************************************
+* {
+    outline: none !important;
+}
+
+// fonts
+@import 'modules/fonts';
+// bootstrap
+@import "bootstrap";
+// extendable clases
+@import 'modules/extend';
+
+body {
+    font-family: $font-family-redHatDisplay;
+    @include scrollerY(#ddd, #333, 0.3, 8);
+}
+
+a,
+a:hover {
+    text-decoration: none;
+}
+
+a img,
+:link img {
+    border: 0;
+}
+
+address {
+    font-style: normal;
+}
+
+// we don't want the yellow background of webkit
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px white inset;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: $font-weight-Black;
+}
+
+// custom code here
+.navbar {
+    z-index: 999;
+
+    &-toggler {
+        &.change {
+            .navbar-toggler-icon {
+                &.bar2 {
+                    opacity: 0;
+                }
+
+                &.bar1 {
+                    transform: rotate(45deg) translate(8px, 7px);
+                }
+
+                &.bar3 {
+                    transform: rotate(-45deg) translate(5px, -5px);
+                }
+            }
+        }
+    }
+
+    &-toggler-icon {
+        width: 30px;
+        height: 2px;
+        display: block;
+        background: white;
+        margin: 7px 0;
+        transition: 0.3s;
+    }
+
+    &-brand {
+        img {
+            max-width: 115px;
+            width: 100%;
+            object-fit: contain;
+            height: 50px;
+        }
+    }
+
+    .header &-nav {
+        gap: 30px;
+    }
+}
+
+
+.hero {
+    height: 100vh;
+    min-height: 750px;
+}
+
+.nav-link {
+    .header & {
+        display: inline-flex;
+        align-items: center;
+        width: 100%;
+        justify-content: center;
+
+        &:hover {
+            color: $yellow;
+        }
+    }
+}
+
+.animate {
+    &-title {
+        max-width: 200px;
+    }
+}
+
+
+
+.dropdown {
+    &-menu {
+        li:not(:last-child) {
+            margin-bottom: 6px;
+        }
+    }
+
+    &-toggle {
+        &:after {
+            width: 15px;
+            border: 0;
+            background: url("data:image/svg+xml,%0A%3Csvg xmlns='http://www.w3.org/2000/svg' height='24' viewBox='0 0 24 24' width='24'%3E%3Cpath d='M0 0h24v24H0V0z' fill='none'/%3E%3Cpath fill='white' d='M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z'/%3E%3C/svg%3E");
+            background-size: 20px 23px;
+            height: 15px;
+            background-position: center center;
+            transition: 0.2s;
+        }
+
+        &.show {
+            &:after {
+                transform: rotate(180deg);
+            }
+        }
+    }
+}
+
+
+
+.header {
+
+    &-btn {
+        padding: 16px 28px 16px 28px;
+        line-height: 1;
+    }
+
+    .nav-item {
+        position: relative;
+        padding: 10px 0;
+    }
+
+    .navbar {
+        &-dark {
+            .search-btn {
+                background-color: rgba($color: #fff, $alpha: .3);
+
+                &:active {
+                    background-color: rgba($color: #fff, $alpha: .3);
+                }
+            }
+        }
+    }
+
+}
+
+// X-Large devices (large desktops, less than 1400px)
+@include media-breakpoint-down(xxl) {}
+
+@media screen and (max-width:1365px) {
+    .navbar {
+        &-brand {
+            img {
+                max-width: 200px;
+            }
+        }
+    }
+}
+
+// Large devices (desktops, less than 1200px)
+@include media-breakpoint-down(xl) {
+    .header {
+        &-btn {
+            line-height: 1;
+            padding: 12px 20px;
+            font-size: 13px;
+        }
+    }
+
+}
+
+// Medium devices (tablets, less than 992px)
+@include media-breakpoint-down(lg) {
+
+    h1,
+    .display-1 {
+        font-size: 42px;
+    }
+
+    .hero {
+        height: auto;
+        min-height: unset;
+    }
+
+    .navbar {
+        .header &-collapse {
+            position: fixed;
+            inset: 0;
+            background: $body-bg;
+
+            &.show {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+    }
+
+    .header {
+        .navbar-nav {
+            gap: 0;
+            max-height: 100%;
+            overflow: auto;
+            padding: 60px 0;
+        }
+
+        .dropdown {
+            &-menu {
+                background: transparent;
+                text-align: center;
+            }
+
+            &-toggle.show {
+                text-align: center;
+            }
+        }
+    }
+}
+
+// Small devices (landscape phones, less than 768px)
+@include media-breakpoint-down(md) {
+
+    h1,
+    .display-1 {
+        font-size: 32px;
+    }
+
+    .header .nav-item {
+        padding: 5px 0;
+    }
+}
+
+// X-Small devices (portrait phones, less than 576px)
+@include media-breakpoint-down(sm) {}
+
+*********************************************************************************************************
+
+
+
+Here is my index.js file code which is used to compile code into app.js file.
+
+*********************************************************************************************************
+// css file
+import "../sass/style.scss";
+import gsap from "gsap";
+
+import { Button, Collapse, Dropdown } from "bootstrap";
+
+const bootstrap = (window.bootstrap = require("bootstrap"));
+
+let customfunc = {
+  getOffsetTop: function getOffsetTop(elem) {
+    var offsetTop = 0;
+
+    do {
+      if (!isNaN(elem.offsetTop)) {
+        offsetTop += elem.offsetTop;
+      }
+    } while ((elem = elem.offsetParent));
+
+    return offsetTop;
+  },
+  extend: function extend(a, b) {
+    for (var key in b) {
+      if (b.hasOwnProperty(key)) a[key] = b[key];
+    }
+
+    return a;
+  },
+  triggerAnimate: function triggerAnimate(eleSelector, opts) {
+    var defaults = {
+      triggerPosition: 0.85,
+      refreshCallback: function refreshCallback() {},
+      setCallback: function setCallback() {},
+    };
+    var options = customfunc.extend(defaults, opts);
+    var winHeight = window.innerHeight;
+    var elems = document.querySelectorAll(eleSelector);
+    elems.forEach(function (elem, index) {
+      if (!elem) {
+        return;
+      }
+
+      options.setCallback(elem, index);
+      var eleStatus = true;
+      document.addEventListener("scroll", function (e) {
+        scrolledContent();
+      });
+      scrolledContent();
+
+      function scrolledContent() {
+        var ScrollPosition = window.scrollY;
+        var eleTopPosition = customfunc.getOffsetTop(elem);
+
+        if (!eleStatus) {
+          return;
+        }
+
+        if (
+          ScrollPosition >
+          eleTopPosition - winHeight * options.triggerPosition
+        ) {
+          options.refreshCallback(elem, index);
+          eleStatus = false;
+        }
+      }
+    });
+  },
+};
+let animate = {
+  animateGridSet: function animateGridSet(elem) {
+    gsap.set(elem.querySelectorAll(".animate-item"), {
+      scale: 0.5,
+      opacity: 0,
+    });
+    gsap.set(elem.querySelectorAll("h1"), {
+      y: 100,
+      opacity: 0,
+    });
+  },
+  animateGrid: function animateGrid(elem) {
+    gsap.to(elem.querySelectorAll(".animate-item"), {
+      scale: 1,
+      opacity: 1,
+      duration: 1,
+      stagger: 0.3,
+    });
+    gsap.to(elem.querySelectorAll("h1"), {
+      y: 0,
+      opacity: 1,
+      duration: 1,
+    });
+  },
+};
+
+customfunc.triggerAnimate(".animate", {
+  refreshCallback: animate.animateGrid,
+  setCallback: animate.animateGridSet,
+  triggerPosition: 0.65,
+});
+
+let toggleBtn = document.querySelector(".navbar-toggler");
+let navbar = document.querySelector("#navbarCustom");
+let body = document.body;
+
+toggleBtn.addEventListener("click", function () {
+  this.classList.toggle("change");
+  navbar.classList.toggle("show");
+  body.classList.toggle("overflow-hidden");
+});
+
+
+*********************************************************************************************************
